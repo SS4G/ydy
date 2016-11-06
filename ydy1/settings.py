@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'ydy1.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ydy',
+        'NAME': 'ydy_web',
         'USER': 'root',
         'PASSWORD': 'ss4g0616',
         'HOST':'127.0.0.1',

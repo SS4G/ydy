@@ -1,0 +1,26 @@
+<html><!-- 只是注册页面的模板-->
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+        <title>运动缘登录</title>
+    </head>
+    <body>
+        <h1> 这是运动缘用户注册页面 </h1>
+        <form action="{% url 'ydy_web:sign_up_result_page' %}" method="post">
+            {% csrf_token %}
+            用户ID(请输入0-9 12位数字):<br>
+            <input type="text" name="user_ID"><br>
+            昵称:(0-9 字母 下划线组成 少于12个字符):<br>
+            <input type="text" name="nick_name">
+            <br>
+            密码(请输入0-9 6位数字):<br>
+            <input type="password" name="password_0"><br>
+            确认密码(请输入0-9 6位数字):<br>
+            <input type="password" name="password_1">
+            <br>
+            <br>
+            <input type="submit"   value="提交">
+        </form>         
+        <a href="{% url 'ydy_web:start_page' %}">返回起始页</a>
+        <p>请登录后操作</p>
+    </body>
+</html>
