@@ -186,6 +186,9 @@ def sign_in_result(req):
     return response
     
 def Equipment_list(req):
+    """
+    这个借场函数用于罗列所有的借场信息
+    """
     ctx={}
     sign_in_success=True
     try :
@@ -204,6 +207,9 @@ def Equipment_list(req):
     return render(req,"ydy_web/Equipment_list.html",ctx)
     
 def Equipment_item(req,Equip_id):
+    """
+    这个函数用于显示所有的场地具体信息
+    """
     ctx={}
     sign_in_success=True
     try :
@@ -215,7 +221,6 @@ def Equipment_item(req,Equip_id):
         if len(Equipment_selected)==0:
             raise Http404("场地信息数据库有误 TAT 请联系管理员")
             
-         
         content=Equipment_selected[0].Equipment_content
         
         #get user list string from database
@@ -234,9 +239,34 @@ def Equipment_item(req,Equip_id):
     return render(req,"ydy_web/Equipment_item.html",ctx)
       
 def Topic_list(req):
-    pass
+    """
+    该函数用于显示 主题列表
+    """
+    ctx={}
+    sign_in_success=True
+    try :
+        user_account=req.COOKIES["ydy_user_account"]   
+        
+        #if get cookie success
+        ctx["user_account"]=user_account
+        Topic_list0=Topic.objects.filter()
+        Topic_title_list=[]
+        for i in Topic_list0:
+            Topic_title_list.append({"title":i.Topic_title,"date":i.Topic_date,"author":i.Topic_author,"topic_id":i.Topic_id})
+        ctx["Topic_title_list"]=Topic_title_list
+    except KeyError:
+        sign_in_success=False    
+        ctx["Topic_title_list"]=[("***","***")]
+    ctx["sign_in_success"]=sign_in_success
+    return render(req,"ydy_web/Topic_list.html",ctx)
+    
+    
 def Topics(req,Topic_id):
-    pass 
+    return HttpResponse("<h1> topics </h1>")
+    
+    
+    
+    
 def Topic_edit(req):
     pass
 def Comment_edit(req,Topic_id):  

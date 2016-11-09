@@ -1,0 +1,20 @@
+<html><!-- 这是评论发表页面的模板-->
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+        <title>编辑评论</title>
+    </head>
+    <body>
+        {% if sign_in_success %}
+        欢迎你 {{ user_account }}<br>
+        ---这里是运动缘论坛----<br>
+            {% for topic in Topic_title_list %}            
+                <a href="{% url 'ydy_web:Forum_Topics_page' topic.topic_id %}" >{{ forloop.counter }}.{{topic.title}} by {{ topic.author }} at {{topic.date}}  </a>   <br>     
+            {% endfor %}
+        {% else %}
+        <h5> 你还没有登录请登录 </h5>
+        {% endif %}
+        <a href="{% url 'ydy_web:sign_in_page' %}">回到起始页</a>     
+        <a href="{% url 'ydy_web:start_page' %}">回到起始页</a>
+        
+    </body>
+</html>

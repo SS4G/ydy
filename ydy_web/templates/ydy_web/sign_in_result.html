@@ -9,6 +9,7 @@
             <h5> 欢迎你 {{ user_account }} : {{ user_nickname }} 来到运动缘</h5>
             <br>
             <a href="{% url 'ydy_web:Equipment_list_page' %}">点此进入到场地信息页面</a>
+            <a href="{% url 'ydy_web:Forum_Topic_list_page'  %}">点此进入到论坛主页页面</a>
         {% else %}
             <h5> 对不起 登陆失败！</h5>
             {{ fail_reason }}

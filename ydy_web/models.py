@@ -15,6 +15,7 @@ class User(models.Model):#这个数据库用来记录用户的注册信息
 
 class Topic(models.Model):#这个表用来记录 
     Topic_id       = models.IntegerField(default=0) #该主题在数据库中的唯一编号
+    Topic_title    = models.CharField(max_length=100,default=" ") #主题的标题
     Topic_date     = models.DateTimeField('date published')#该主题发表的时间
     Topic_content  = models.CharField(max_length=500)#该主题的正文
     Topic_author   = models.CharField(max_length=20) #该主题的作者的账号
