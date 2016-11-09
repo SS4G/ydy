@@ -1,0 +1,28 @@
+<html><!-- 这是具体场地信息页面的模板-->
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+        <title>具体场地信息</title>
+    </head>
+    <body>
+        {% if sign_in_success%}
+        <h5> 欢迎你 {{ user_account }} 运动缘</h5>
+        <br>
+        <h5> 场地信息 </h5>
+        <p>  {{ content }} </p><br>
+        <br>
+            场地申请截止日期
+            {{ endtime }}<br>
+            以下用户已经预定了该场地，你可以通过客户端与他们取得联系并进行协调
+            {% for user in users %}
+                {{ forloop.count }} <li> {{ user }} </li>            
+            {% endfor %}
+            <a href="{% url 'ydy_web:Equipment_list_page' %}">回到场地信息列表</a>
+            <a href="{% url 'ydy_web:start_page' %}">回到起始页</a>
+        <br>
+        {% else %}
+        你还未登录 请重新登录
+        <a href="{% url 'ydy_web:sign_in_page' %}">点此登录</a>
+        <a href="{% url 'ydy_web:start_page' %}">回到起始页</a>
+        {% endif %}
+    </body>
+</html>

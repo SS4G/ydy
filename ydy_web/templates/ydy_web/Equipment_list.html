@@ -1,0 +1,26 @@
+<html><!-- 这是机场地信息列表页面的模板-->
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+        <title>场地信息列表</title>
+    </head>
+    <body>
+        {% if sign_in_success%}
+        <h5> 欢迎你 {{ user_account }} 运动缘</h5>
+        <br>
+        <h5> 场地信息列表  </h5>
+        <br>
+            {% for equipment in Equipment_list %}
+                <h6>----场地信息 {{ forloop.counter }}----</h6>
+                {{equipment.Equipment_content}}<br>
+                发布于:   {{equipment.Equipment_begin_date}}<br>
+                截止日期:{{equipment.Equipment_begin_date}}<br>
+                <a href="{% url 'ydy_web:Equipment_item_page'  equipment.Equipment_id %}"> 查看详情 </a>
+                <h6>-----------------------------</h6>
+            {% endfor %}
+        <br>
+        {% else %}
+        你还未登录 请重新登录
+        <a href="{% url 'ydy_web:sign_in_page' %}">登录点击这里</a>
+        {% endif %}
+    </body>
+</html>

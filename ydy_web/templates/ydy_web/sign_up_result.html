@@ -1,0 +1,18 @@
+<html><!-- 这是注册结果页面的模板-->
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+        <title>运动缘注册结果</title>
+    </head>
+    <body>
+        {% if sign_up_success  %}
+            <p> 恭喜！ 注册成功！请返回登录页面登录。</p><br>
+            <a href="{% url 'ydy_web:sign_in_page' %}">登录</a><br>
+        {% else %}
+            <p> 您填写的注册信息是有问题的 请返回注册页面重新填写 </p><br>
+            <li> {{ fail_reason }}</li>
+            <a href="{% url 'ydy_web:sign_up_page' %}">返回注册页面</a><br>
+        {% endif %}        
+        <a href="{% url 'ydy_web:start_page' %}">返回起始页</a>
+        <br>
+    </body>
+</html>

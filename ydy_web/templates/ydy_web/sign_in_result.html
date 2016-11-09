@@ -1,0 +1,20 @@
+<html><!-- 这是登录结果页面的模板-->
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+        <title>运动缘登录结果</title>
+    </head>
+    <body>
+        {% if sign_in_success  %}
+            <li> 登录成功 </li><br>
+            <h5> 欢迎你 {{ user_account }} : {{ user_nickname }} 来到运动缘</h5>
+            <br>
+            <a href="{% url 'ydy_web:Equipment_list_page' %}">点此进入到场地信息页面</a>
+        {% else %}
+            <h5> 对不起 登陆失败！</h5>
+            {{ fail_reason }}
+            <h5> 请重新登录 </h5>
+            <a href="{% url 'ydy_web:sign_in_page' %}">点此登录</a>            
+        {% endif %}        
+        <br>
+    </body>
+</html>
