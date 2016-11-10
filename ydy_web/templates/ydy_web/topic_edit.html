@@ -1,0 +1,25 @@
+<html><!-- 这是发帖页面的模板-->
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+        <title>主题内容</title>
+    </head>
+    <body>
+        <h1> 这是运动缘发表主题页面 </h1> 
+        {% if sign_in_success %}
+        <h5> 当前登录用户 {{ user_account }} </h5>        
+        <form action="{% url 'ydy_web:Forum_Topic_edit_result_page' %}" method="post">
+            {% csrf_token %}
+            主题标题:<br>
+            <input type="text" name="topic_title" width="400px" ><br>
+            
+            在此输入主题内容 要少于400字:<br>
+            <input type="text" name="topic_content" width="400px" height="300px">
+            <br> 
+            <input type="submit"  value="发表">
+        </form>       
+        {% else %}
+        <h4> 你还未登录 请重新登录 </h4>
+        <a href="{% url 'ydy_web:sign_in_page' %}">登录</a>
+        {% endif %}        
+    </body>
+</html>

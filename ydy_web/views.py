@@ -51,11 +51,17 @@ def start(req):
     #return HttpResponse("<h1>start_page</h1>")
     
 def sign_in(req):
+    """
+    返回一个预定的登录模板
+    """
     context={}
     return render(req, 'ydy_web/sign_in.html', context)
     #return HttpResponse("<h1>sing_in_page</h1>")
 
 def sign_up(req):
+    """
+    返回一个预定的注册模板
+    """
     context={}
     return render(req, 'ydy_web/sign_up.html', context)
     #return HttpResponse("<h1>sing_up_page</h1>")
@@ -262,6 +268,9 @@ def Topic_list(req):
     
     
 def Topics(req,Topic_id):
+    """
+    该函数用于显示具体的主题条目以及对应的评论
+    """
     ctx={}
     sign_in_success=True
     try :
@@ -277,27 +286,111 @@ def Topics(req,Topic_id):
         topic_author =the_topic[0].Topic_author
         topic_date   =the_topic[0].Topic_date
         
-        comment_list=Comment.objects.filter(Topic_id=Topic_id)
+        comment_list=Comment.objects.filter(Comment_topic_belong_to=Topic_id)
         
         ctx["topic_content"]=topic_content
         ctx["topic_title"]=topic_title  
         ctx["topic_author"]=topic_author 
-        ctx["topic_date"]=topic_date               
+        ctx["topic_date"]=topic_date   
+        ctx["comment_list"]=comment_list  
+        ctx["topic_id"]=Topic_id        
     except KeyError:
         sign_in_success=False    
 
     ctx["sign_in_success"]=sign_in_success
-    
-    
-    return render(req,"ydy_web/Topic_item.html",ctx)
-    
-    
-    
+    return render(req,"ydy_web/topic_item.html",ctx)
     
 def Topic_edit(req):
-    pass
-def Comment_edit(req,Topic_id):  
-    pass 
-    
+    """
+    发帖方法 返回一个渲染后的html模板
+    """    
+    ctx={}
+    sign_in_success=True
+    try :
+        user_account=req.COOKIES["ydy_user_account"]   
+        ctx["user_account"]=user_account            
+    except KeyError:
+        sign_in_success=False    
+    ctx["sign_in_success"]=sign_in_success   
+    return render(req,"ydy_web/topic_edit.html",ctx)
 
+def Topic_edit_result(req):
+    """
+    评论发表结果
+    """
+    ctx={}
+    sign_in_success=True
+    try :
+        user_account=req.COOKIES["ydy_user_account"]   
+        
+        #if get cookie success
+        ctx["user_account"]=user_account
+        content=req.POST["topic_content"]  
+        title  =req.POST["topic_title"]        
+        new_Topic_num=get_item_num(item_type="Topic")+1
+        t=Topic(
+                Topic_id        =new_Topic_num,
+                Topic_title     =title,
+                Topic_author    =user_account,
+                Topic_content   =content,
+                Topic_date      =timezone.now()
+        )
+        t.save()
+        set_item_num(item_type="Topic",new_val=new_Topic_num)
+        
+    except KeyError:
+        sign_in_success=False    
+    
+    ctx["sign_in_success"]=sign_in_success
+    return render(req,"ydy_web/topic_edit_result.html",ctx)
+        
+def Comment_edit(req,Topic_id):  
+    """
+    编辑评论
+    """
+    ctx={}
+    sign_in_success=True
+    try :
+        user_account=req.COOKIES["ydy_user_account"] 
+        ctx["user_account"]=user_account
+    except KeyError:
+        sign_in_success=False    
+    
+    ctx["sign_in_success"]=sign_in_success   
+    ctx["editing_topic_id"]=Topic_id
+    ctx["topic_title"]=Topic.objects.filter(Topic_id=Topic_id)[0].Topic_title
+    return render(req,"ydy_web/comment_edit.html",ctx)
+         
+     
+def Comment_edit_result(req,editing_topic_id):  
+    """
+    编辑评论
+    """
+    ctx={}
+    sign_in_success=True
+    try :
+        user_account=req.COOKIES["ydy_user_account"] 
+        ctx["user_account"]=user_account
+        comment_content=req.POST["topic_content"]
+        comment_author=user_account
+        comment_date=timezone.now()
+        print("type of the topic id is ",type(editing_topic_id))
+        comment_topic_belong=editing_topic_id
+        
+        new_Comment_num=get_item_num(item_type="Comment")+1
+        c=Comment(
+                Comment_id                  =new_Comment_num,
+                Comment_author              =user_account,
+                Comment_topic_belong_to     =editing_topic_id,
+                Comment_content             =comment_content,
+                Comment_date                =comment_date
+        )
+        c.save()
+        set_item_num(item_type="Comment",new_val=new_Comment_num)
+        
+    except KeyError:
+        sign_in_success=False        
+    ctx["sign_in_success"]=sign_in_success      
+    return render(req,"ydy_web/comment_edit_result.html",ctx)
+         
     

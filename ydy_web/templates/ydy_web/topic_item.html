@@ -1,0 +1,39 @@
+<html><!-- 这是主题页面的模板-->
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+        <title>主题内容</title>
+    </head>
+    <body>
+        {% if sign_in_success %}
+        
+        
+        
+        
+        <h3> {{ topic_title  }} </h3>
+        by <br>
+        <h6> {{ topic_author  }} </h6>
+        正文<br>
+        <p>  {{ topic_content }} </p><br>
+        发表于:<br>
+        <li> {{ topic_date    }} </li><br>
+        <h5> <a href="{% url 'ydy_web:Forum_Comment_edit_page' topic_id %}">点此发表评论</a> <h5>  
+        -------- 评论区 --------<br><br><br>
+        {% for comment in comment_list %}
+            ------- {{ forloop.counter }} 楼 ----------------<br>
+            {{ comment.Comment_content }}<br>
+            由 {{ comment.Comment_author }}<br>
+            发表于 {{ comment.Comment_date }}<br><br><br>
+        {% endfor %}
+        
+        
+        
+        
+        
+        
+        {% else %}
+        <h5> 请重新登录 </h5><br>
+        <a href="{% url 'ydy_web:sign_in_page' %}">点此登录</a>
+        {% endif %}
+
+    </body>
+</html>

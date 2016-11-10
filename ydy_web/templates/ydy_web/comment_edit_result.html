@@ -1,0 +1,16 @@
+<html><!-- 这是发帖页面的模板-->
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+        <title>主题内容</title>
+    </head>
+    <body>
+        <h3> 这是运动缘发表评论结果页面 </h3> 
+        {% if sign_in_success %}
+            主题发表成功<br>
+            <a href="{% url 'ydy_web:Forum_Topic_list_page' %}">返回论坛列表页</a>
+        {% else %}
+        <h4> 你还未登录 请重新登录 </h4>
+        <a href="{% url 'ydy_web:sign_in_page' %}">登录</a>        
+        {% endif %}        
+    </body>
+</html>

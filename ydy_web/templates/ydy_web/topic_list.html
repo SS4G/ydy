@@ -6,6 +6,8 @@
     <body>
         {% if sign_in_success %}
         欢迎你 {{ user_account }}<br>
+        <a href="{% url 'ydy_web:Forum_Topic_edit_page' %}" > 点此发帖 </a>   <br>    
+        
         ---这里是运动缘论坛----<br>
             {% for topic in Topic_title_list %}            
                 <a href="{% url 'ydy_web:Forum_Topics_page' topic.topic_id %}" >{{ forloop.counter }}.{{topic.title}} by {{ topic.author }} at {{topic.date}}  </a>   <br>     
