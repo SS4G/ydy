@@ -49,7 +49,7 @@ def start(req):
     context={}
     return render(req, 'ydy_web/start.html', context)
     #return HttpResponse("<h1>start_page</h1>")
-
+    
 def sign_in(req):
     context={}
     return render(req, 'ydy_web/sign_in.html', context)
@@ -262,7 +262,34 @@ def Topic_list(req):
     
     
 def Topics(req,Topic_id):
-    return HttpResponse("<h1> topics </h1>")
+    ctx={}
+    sign_in_success=True
+    try :
+        user_account=req.COOKIES["ydy_user_account"]   
+        
+        #if get cookie success
+        ctx["user_account"]=user_account
+        the_topic=Topic.objects.filter(Topic_id=Topic_id)
+        if len(the_topic)==0:
+            raise Http404("database errot the Topic not found")
+        topic_content=the_topic[0].Topic_content
+        topic_title  =the_topic[0].Topic_title
+        topic_author =the_topic[0].Topic_author
+        topic_date   =the_topic[0].Topic_date
+        
+        comment_list=Comment.objects.filter(Topic_id=Topic_id)
+        
+        ctx["topic_content"]=topic_content
+        ctx["topic_title"]=topic_title  
+        ctx["topic_author"]=topic_author 
+        ctx["topic_date"]=topic_date               
+    except KeyError:
+        sign_in_success=False    
+
+    ctx["sign_in_success"]=sign_in_success
+    
+    
+    return render(req,"ydy_web/Topic_item.html",ctx)
     
     
     

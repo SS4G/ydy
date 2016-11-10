@@ -1,0 +1,27 @@
+<html><!-- 这是主题页面的模板-->
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+        <title>主题内容</title>
+    </head>
+    <body>
+        {% if sign_in_success %}
+        
+        <h3> {{  topic_title  }} </h3><br>
+        <h5> {{ topic_author  }} </h4><br>
+        <p>  {{ topic_content }} </p><br>
+        <li> {{ topic_date    }} </li><br>
+        
+        -------- 以下为评论 --------
+        {% for comment in comment_list %}
+            {{ comment.Comment_content }}
+            {{ comment.Comment_author }}
+            {{ comment.Comment_date }}
+        {% endfor %}
+        
+        {% else %}
+        <h5> 请重新登录 </h5><br>
+        <a href="{% url 'ydy_web:sign_in_page' %}">点此登录</a>
+        {% endif %}
+
+    </body>
+</html>s
